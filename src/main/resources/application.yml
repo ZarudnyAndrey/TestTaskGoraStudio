@@ -1,0 +1,69 @@
+server:
+  port: 8080
+  tomcat:
+    max-swallow-size: -1
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  servlet:
+    multipart.max-file-size: 3MB
+
+  jpa:
+    database-platform: org.hibernate.dialect.SQLiteDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        jdbc.batch_size: 20
+        criteria.literal_handling_mode: BIND
+        show-sql: true
+        format-sql: true
+        use_sql_comments: true
+
+---
+
+spring:
+  profiles: default
+
+  datasource:
+    driverClassName: org.sqlite.JDBC
+    url: jdbc:sqlite:myDB.db
+    username: sa
+    password: sa
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 7190000
+      minimumIdle: 2
+      maximumPoolSize: 50
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+    default-property-inclusion: NON_NULL
+
+---
+
+spring:
+  profiles: test
+
+  datasource:
+    driverClassName: org.sqlite.JDBC
+    url: jdbc:sqlite:myTestDB.db
+    username: sa
+    password: sa
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 7190000
+      minimumIdle: 2
+      maximumPoolSize: 50
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+    default-property-inclusion: NON_NULL
